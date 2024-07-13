@@ -54,4 +54,5 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     timestamp = models.DateTimeField(auto_now_add=True)
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES,default='Cash')
     description = models.CharField(max_length=70,blank=True,null=True)
