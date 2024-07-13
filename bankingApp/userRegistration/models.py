@@ -43,9 +43,12 @@ class Account(models.Model):
     ibmn_no = models.CharField(max_length=20, unique=True)
     user = models.ForeignKey(UserEx, on_delete=models.CASCADE, related_name='accounts')
     balance = models.DecimalField(max_digits=10, decimal_places=2)
-    description = models.CharField(max_length=70,blank=True,null=True)
-    type = models.CharField(max_length=70,blank=True,null=True)
 class Transaction(models.Model):
+    TRANSACTION_TYPES = [
+        ('deposit', 'Deposit'),
+        ('withdrawal', 'Withdrawal'),
+        ('transfer', 'Transfer'),
+    ]
     sender = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='sent_transactions')
     receiver = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='received_transactions')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
