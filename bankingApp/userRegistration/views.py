@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from userRegistration.models import Account, Transaction,Bank
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
+from .serializer import *
 #=========  API Create =============
 #create user 
 @csrf_exempt
@@ -161,7 +162,8 @@ def transferFunds(request):
                 sender=sender,
                 receiver=receiver,
                 amount=amount,
-                fee=fee
+                fee=fee,
+                transaction_type='transfer'
             )
             sender.balance -= amount + fee
             receiver.balance += amount
@@ -187,9 +189,22 @@ def transferFunds(request):
 
 # ========== transaction_history ===========
 @csrf_exempt
-def transactionHistory(request):
-    if request.method == 'POST':
-        pass
+def transactionHistory(request,user_id):
+    if request.method == 'GET':
+        user=UserEx.objects.get(id=user_id)
+        account=Account.objects.filter(user=user)
+        # user id to get all relevant transections 
+        account_id=account.values_list('id' , flat=True)
+        transaction=Transaction.objects.filter(sender_id__in=account_id) | Transaction.objects.filter(receiver_id__in=account_id) 
+        serializer=TransactionSerializer(transaction,many=True).data
+        return JsonResponse(
+            good_response(
+                request.method,
+                {
+                    'record' : serializer 
+                }
+            )
+        )
     else:
         return JsonResponse(bad_response(
             request.method,
