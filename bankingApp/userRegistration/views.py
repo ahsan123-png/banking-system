@@ -54,61 +54,86 @@ def createUser(request):
 @csrf_exempt
 def depositMoney(request):
     if request.method == 'POST':
-        data=get_request_body(request)
-        account_number=data.get('acc_no')
-        amount=data.get('amount')
-        account=Account.objects.get(acc_no=account_number)
-        type="Send"
-        description=f'{amount} has been withdrawal from bank {account}'
-        account.balance += amount
-        account.description=description
-        account.type=type
-        account.save()
-        return JsonResponse(
-            good_response(
-                request.method,
-                {'success':f'cash has been deposit successfully'},status=200
+        data = get_request_body(request)
+        account_number = data.get('acc_no')
+        amount = Decimal(data.get('amount'))
+        try:
+            account = Account.objects.get(acc_no=account_number)
+            account.balance += amount
+            account.save()
+            Transaction.objects.create(
+                # when cash is deposit to account the sender is self and receiver is also self 
+                receiver=account,
+                sender=account,
+                amount=amount,
+                transaction_type='deposit',
+                description=f'{amount} deposit to account {account.acc_no}'
             )
-        )
+            return JsonResponse(
+                good_response(
+                    request.method,
+                    {'success': 'Cash has been deposited successfully'},
+                    status=200
+                )
+            )
+        except Account.DoesNotExist:
+            return JsonResponse(
+                bad_response(
+                    request.method,
+                    'Account not found',
+                    status=404
+                )
+            )
     else:
         return JsonResponse(
             bad_response(
-
-            request.method,
-            f'{request.method} not allowed',
-            status=405
-        )
+                request.method,
+                f'{request.method} not allowed',
+                status=405
             )
+        )
 # ====== Cash withdraw ===========
 @csrf_exempt
 def withdrawCash(request):
     if request.method == 'POST':
-        data=get_request_body(request)
-        account_number=data.get('acc_no')
-        amount=data.get('amount')
-        type="Send"
-        account=Account.objects.get(acc_no=account_number)
-        description=f'{amount} has been withdrawal from bank {account}'
-        account.balance -= amount
-        account.description=description
-        account.type=type
-        account.save()
-
-        return JsonResponse(
-            good_response(
-                request.method,
-                {'success':f'{amount} has been withdraw successfully'},status=200
+        data = get_request_body(request)
+        account_number = data.get('acc_no')
+        amount = Decimal(data.get('amount'))
+        try:
+            account = Account.objects.get(acc_no=account_number)
+            account.balance -= amount
+            account.save()
+            Transaction.objects.create(
+                # when cash is deposit to account the sender is self and receiver is also self 
+                receiver=account,
+                sender=account,
+                amount=amount,
+                transaction_type='withdrawal',
+                description=f'{amount} withdraw from account {account.acc_no}'
             )
-        )
+            return JsonResponse(
+                good_response(
+                    request.method,
+                    {'success': 'Cash has been Withdraw successfully'},
+                    status=200
+                )
+            )
+        except Account.DoesNotExist:
+            return JsonResponse(
+                bad_response(
+                    request.method,
+                    'Account not found',
+                    status=404
+                )
+            )
     else:
         return JsonResponse(
             bad_response(
-
-            request.method,
-            f'{request.method} not allowed',
-            status=405
-        )
+                request.method,
+                f'{request.method} not allowed',
+                status=405
             )
+        )
 # ====== transactions ============
 @csrf_exempt
 def transferFunds(request):
@@ -117,7 +142,6 @@ def transferFunds(request):
         sender_account_number = data.get('sender_account_number')
         receiver_account_number = data.get('receiver_account_number')
         amount = Decimal(data.get('amount'))
-
         try:
             sender = Account.objects.select_related('user', 'user__bank').get(acc_no=sender_account_number)
             receiver = Account.objects.select_related('user', 'user__bank').get(acc_no=receiver_account_number)
@@ -127,26 +151,22 @@ def transferFunds(request):
                 {'error': 'Account not found'},
                 status=404
             ))
-
         if sender.balance >= amount:
             # Calculate the fee
             fee = Decimal('0.00')
             if sender.user.bank_name != receiver.user.bank_name:
                 #10*amount/100 ---> percentage
                 fee = amount * Decimal('0.3')  # 10% fee for interbank transfer
-
             transaction = Transaction.objects.create(
                 sender=sender,
                 receiver=receiver,
                 amount=amount,
                 fee=fee
             )
-
             sender.balance -= amount + fee
             receiver.balance += amount
             sender.save()
             receiver.save()
-
             return JsonResponse(good_response(
                 request.method,
                 {'success': 'Funds transferred successfully'},
@@ -165,7 +185,7 @@ def transferFunds(request):
             status=405
         ))
 
-# ========== trasection_history ===========
+# ========== transaction_history ===========
 @csrf_exempt
 def transactionHistory(request):
     if request.method == 'POST':
@@ -178,7 +198,7 @@ def transactionHistory(request):
         ))
 
 
-#+++++++ some usefull methods ++++++++++
+#+++++++ some useful methods ++++++++++
 def generate_username():
     username = ""
     capitalize = [True, False]
