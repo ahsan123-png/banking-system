@@ -6,9 +6,13 @@ from .form import CreateUserForm, DepositMoneyForm, TransferFundsForm
 import requests
 from django.conf import settings
 
+
+# def register(request):
+#     return render(request,'userCreate.html')
+
 API_URL = 'http://localhost:8000/api'
 
-def create_user_view(request):
+def register(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
@@ -16,10 +20,10 @@ def create_user_view(request):
             if response.status_code == 201:
                 return redirect('success')
             else:
-                return render(request, 'frontend/create_user.html', {'form': form, 'error': response.json()})
+                return render(request, 'userCreate.html', {'form': form, 'error': response.json()})
     else:
         form = CreateUserForm()
-    return render(request, 'frontend/create_user.html', {'form': form})
+    return render(request, 'userCreate.html', {'form': form})
 
 def deposit_money_view(request):
     if request.method == 'POST':
