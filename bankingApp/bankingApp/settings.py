@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'userRegistration',
+    'frontend',
    
 ]
 
@@ -56,7 +57,8 @@ ROOT_URLCONF = 'bankingApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / "banking_templates" / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +70,11 @@ TEMPLATES = [
         },
     },
 ]
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = (
+    BASE_DIR / "banking_templates" / "static",
+)
 
 WSGI_APPLICATION = 'bankingApp.wsgi.application'
 
