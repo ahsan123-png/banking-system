@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Account Opening Form</h1>
-        <form method="post">
+        <form method="POST" action={% url "register" %}>
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Create User</button>
