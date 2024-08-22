@@ -22,7 +22,6 @@ def createUser(request):
             account_type = data.get('account_type', '')
             cnic = data.get('cnic', '')
             phone_number = data.get('phone_number', '')
-            description  = data.get('description ', '')
             email = data.get('email', '')
             gender = data.get('gender')
             bank_name = data.get('bank_name','Default Bank')
