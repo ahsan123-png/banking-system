@@ -92,3 +92,7 @@ def onlineTransaction(request):
 
 def success_view(request):
     return render(request, 'success.html')
+
+
+def index(request):
+    return render(request,'index.html')

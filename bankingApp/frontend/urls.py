@@ -8,4 +8,5 @@ urlpatterns = [
     path('money/withdrawal', withdraw_money_view,name="withdrawMoney"),
     path('online_transaction', onlineTransaction,name="onlineTransaction"),
     path('success/', success_view,name="success"),
+    path('home/', index,name="index"),
 ]
