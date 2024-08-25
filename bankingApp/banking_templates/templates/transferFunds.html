@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block body %}
+<style>
+    .fo {
+    max-width: 600px;
+    margin: 100px auto 0 auto; /* Adds margin to the top to push the form below the navbar */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .fo {
+    padding-top: 100px; /* Adjust this value according to your navbar's height */
+    }
+    .fo {
+    z-index: 1; /* Lower z-index to keep the form underneath the navbar */
+    }
+
+    /* Adjusted Form Fields for Better Layout */
+        .fo .form-group {
+        margin-bottom: 20px;
+        }
+</style>
+
+<div class="container">
+    <div class="fo">
+        <form method="POST" action="{% url "onlineTransaction" %}">
+            {% csrf_token %}
+            <div class="row form-group">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    {{ form.sender_account_number|as_crispy_field }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.receiver_account_number|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    {{ form.amount|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Send Money" class="btn btn-primary btn-md text-white">
+                </div>
+            </div>
+        </form>
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}
+
+
+    
+
