@@ -252,7 +252,7 @@ body:after {
 .select-wrap, .wrap-icon {
   position: relative; }
   .select-wrap .icon, .wrap-icon .icon {
-    position: absolute;
+    position: relative;
     right: 10px;
     top: 50%;
     -webkit-transform: translateY(-50%);
@@ -264,17 +264,27 @@ body:after {
     -moz-appearance: none;
     appearance: none;
     width: 100%; }
+body {
+  padding-top: 80px; /* Adjust this value based on the height of your navbar */
+}
+
+
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
 
 /* Navbar */
 .site-navbar {
   margin-bottom: 0px;
   z-index: 1999;
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   border-bottom: rgba(255, 255, 255, 0.7); }
   .site-navbar .site-logo {
-    position: relative;
+    position: fixed;
     left: 0;
     top: -5px; }
   .site-navbar .site-navigation .site-menu {
@@ -317,7 +327,7 @@ body:after {
         visibility: hidden;
         opacity: 0;
         top: 100%;
-        position: absolute;
+        position: fixed;
         text-align: left;
         border-top: 2px solid #007bff;
         -webkit-box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.1);
@@ -330,7 +340,7 @@ body:after {
         -o-transition: 0.2s 0s;
         transition: 0.2s 0s; }
         .site-navbar .site-navigation .site-menu .has-children .dropdown.arrow-top {
-          position: absolute; }
+          position: fixed; }
           .site-navbar .site-navigation .site-menu .has-children .dropdown.arrow-top:before {
             bottom: 100%;
             left: 20%;
@@ -338,7 +348,7 @@ body:after {
             content: " ";
             height: 0;
             width: 0;
-            position: absolute;
+            position: fixed;
             pointer-events: none; }
           .site-navbar .site-navigation .site-menu .has-children .dropdown.arrow-top:before {
             border-color: rgba(136, 183, 213, 0);
@@ -527,7 +537,7 @@ body:after {
           padding-left: 15px !important; }
 
 .sticky-wrapper {
-  position: absolute;
+  position: fixed;
   z-index: 100;
   width: 100%; }
   .sticky-wrapper .site-navbar {
