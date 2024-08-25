@@ -29,12 +29,12 @@ def register(request):
             if response.status_code == 200:
                 return redirect('success')
             else:
-                return render(request, 'userCreate.html', {'form': form, 'error': response.json()})
+                return render(request, 'openAcc.html', {'form': form, 'error': response.json()})
         else:
             print("Form is invalid:", form.errors)  # Debug: Print form errors
     else:
         form = CreateUserForm()
-    return render(request, 'userCreate.html', {'form': form})
+    return render(request, 'openAcc.html', {'form': form})
 #============= Deposit money to bank account ================== 
 def deposit_money_view(request):
     if request.method == 'POST':
@@ -93,6 +93,6 @@ def onlineTransaction(request):
 def success_view(request):
     return render(request, 'success.html')
 
-
+# ============== template views ==============
 def index(request):
     return render(request,'index.html')

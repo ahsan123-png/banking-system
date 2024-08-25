@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'userRegistration',
     'frontend',
     'crispy_forms',
-    'crispy_bootstrap4',
+    'crispy_bootstrap5',
    
 ]
 
@@ -140,4 +140,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CRISPY_TEMPLATE_PACK = 'bootstrap4'  # or 'bootstrap5', 'bootstrap3', 'uni_form', etc.
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'  # or 'bootstrap5', 'bootstrap3', 'uni_form', etc.
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

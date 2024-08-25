@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+<!-- we can also use {%crispy form%} just only one tag that do all work -->
+<div class="fo" style="width:50%; margin-left: 15%; margin-top: 5%;">
+    <form method="POST" action="{% url "register" %}">
+        {% csrf_token %}
+        <div class="row form-group">
+            <div class="col-md-6 mb-3 mb-md-0">
+                {{ form.name|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.father_name|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 mb-3 mb-md-0">
+                {{ form.mother_name|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.cnic|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 mb-3 mb-md-0">
+                {{ form.email|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.phone_number|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 mb-3 mb-md-0">
+                {{ form.gender|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.date_of_birth|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 mb-3 mb-md-0">
+                {{ form.account_type|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.bank_name|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6">
+                {{ form.profession|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Create" class="btn btn-primary btn-md text-white">
+            </div>
+        </div>
+</div>
+</form>
+</div>
+{% endblock body %}
