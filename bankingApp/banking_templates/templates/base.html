@@ -45,7 +45,7 @@
         <div class="row align-items-center">
 
           <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="index.html" class="h2 mb-0">Finances<span class="text-primary">.</span>
+            <h1 class="mb-0 site-logo"><a href="index.html" class="h2 mb-0">Py Bank<span class="text-primary">.</span>
               </a></h1>
           </div>
 
@@ -75,8 +75,9 @@
 
 
                 <li><a href="{% url "register" %}" class="nav-link">Open Account</a></li>
-                <li><a href="#blog-section" class="nav-link">Register</a></li>
-                <li><a href="#blog-section" class="nav-link">Login</a></li>
+                <li><a href="{% url "onlineTransaction" %}" class="nav-link">Online Transection</a></li>
+                <li><a href="{% url "depositMoney" %}" class="nav-link">Cash Deposit</a></li>
+                <li><a href="{% url "withdrawMoney" %}" class="nav-link">Cash Withdraw</a></li>
                 <!--<li><a href="#contact-section" class="nav-link">Contact</a></li> -->
                 <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-facebook"></span></a>
                 </li>
@@ -106,8 +107,7 @@
             <div class="row">
               <div class="col-md-5">
                 <h2 class="footer-heading mb-4">About Us</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facere laudantium magnam voluptatum
-                  autem. Amet aliquid nesciunt veritatis aliquam.</p>
+                <p>we understand that managing money can be complex and time-consuming. That’s why we’ve designed our app to be user-friendly, intuitive, and packed with features that simplify your financial life.</p>
               </div>
               <div class="col-md-3 ml-auto">
                 <h2 class="footer-heading mb-4">Quick Links</h2>
